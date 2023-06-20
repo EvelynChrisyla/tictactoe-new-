@@ -1,6 +1,5 @@
-<?php
-//save_score.php 
 
+<?php
 $host = "tiktaktoedatabase.cqgapuqaeazu.us-east-1.rds.amazonaws.com";
 $port = 5432;
 $dbname = "tiktaktoe";
@@ -16,14 +15,11 @@ if (!$conn) {
 $name = $_POST['name'];
 $score = $_POST['score'];
 
-$query = "INSERT INTO scores (name, score) VALUES ('$name', '$score')";
+$query = "INSERT INTO scores (name, score) VALUES ('$name', $score)";
 
 $result = pg_query($conn, $query);
-
-if ($result) {
-  echo "Score saved successfully!";
-} else {
-  echo "Error: " . pg_last_error($conn);
+if (!$result) {
+  die("Query failed: " . pg_last_error());
 }
 
 pg_close($conn);
